@@ -4,7 +4,7 @@ Change your Expo app's icon at runtime, on iOS and Android. Ships as an Expo
 config plugin (generates the native alternate-icon assets at build time) plus
 a small native module (switches the active icon at runtime).
 
-Compatible with Expo SDK 55, 56, and 57.
+Compatible with Expo SDK 53 through 57.
 
 ## How it works
 

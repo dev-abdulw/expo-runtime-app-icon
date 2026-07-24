@@ -1,7 +1,7 @@
 {
   "name": "expo-runtime-app-icon",
   "version": "0.1.0",
-  "description": "Change your Expo app's icon at runtime, on iOS and Android, with an Expo config plugin and native module. Compatible with Expo SDK 55, 56, and 57.",
+  "description": "Change your Expo app's icon at runtime, on iOS and Android, with an Expo config plugin and native module. Compatible with Expo SDK 53 through 57.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -66,7 +66,7 @@
     ]
   },
   "peerDependencies": {
-    "expo": ">=55.0.0",
+    "expo": ">=53.0.0",
     "react": "*",
     "react-native": "*"
   }

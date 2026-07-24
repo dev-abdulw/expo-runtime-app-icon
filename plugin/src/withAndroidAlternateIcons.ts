@@ -13,6 +13,27 @@ import { NormalizedAppIcon } from './types';
 const ANDROID_RES_PATH = 'android/app/src/main/res/';
 const LEGACY_ICON_SIZE = 48;
 
+// Declared locally (rather than imported from @expo/config-plugins) because
+// `activity-alias` isn't present on the `ManifestApplication` type in every
+// @expo/config-plugins version this plugin supports (SDK 53+). The manifest
+// XML parser (xml2js) accepts arbitrary keys at runtime regardless.
+interface ManifestActivityAlias {
+  $: {
+    'android:name': string;
+    'android:enabled'?: string;
+    'android:exported'?: string;
+    'android:icon'?: string;
+    'android:roundIcon'?: string;
+    'android:targetActivity': string;
+    'android:label'?: string;
+    [key: string]: string | undefined;
+  };
+  'intent-filter'?: {
+    action: { $: { 'android:name': string } }[];
+    category: { $: { 'android:name': string } }[];
+  }[];
+}
+
 const dpiValues: Record<string, { folderName: string; scale: number }> = {
   mdpi: { folderName: 'mipmap-mdpi', scale: 1 },
   hdpi: { folderName: 'mipmap-hdpi', scale: 1.5 },
@@ -92,23 +113,27 @@ export const withAndroidAlternateIcons: ConfigPlugin<NormalizedAppIcon[]> = (con
 
   config = withAndroidManifest(config, (config) => {
     const manifest = config.modResults;
-    const application = AndroidConfig.Manifest.getMainApplicationOrThrow(manifest);
+    const application = AndroidConfig.Manifest.getMainApplicationOrThrow(manifest) as {
+      $: { 'android:label'?: string };
+      'activity-alias'?: ManifestActivityAlias[];
+    };
     const mainActivity = AndroidConfig.Manifest.getMainActivityOrThrow(manifest);
     const mainActivityName: string = mainActivity.$['android:name'];
 
-    application['activity-alias'] = application['activity-alias'] ?? [];
+    const existingAliases = application['activity-alias'] ?? [];
     // Remove any aliases we previously generated so re-runs of prebuild stay idempotent.
-    application['activity-alias'] = application['activity-alias'].filter(
+    const aliases = existingAliases.filter(
       (alias) => !alias.$?.['android:targetActivity']?.endsWith(mainActivityName)
     );
 
     for (const icon of icons) {
-      const alias: AndroidConfig.Manifest.ManifestActivityAlias = {
+      aliases.push({
         $: {
           'android:name': `${mainActivityName}${icon.name}`,
           'android:enabled': 'false',
           'android:exported': 'true',
           'android:icon': `@mipmap/${launcherName(icon.name)}`,
+          'android:roundIcon': `@mipmap/${roundLauncherName(icon.name)}`,
           'android:targetActivity': mainActivityName,
           'android:label': application.$?.['android:label'],
         },
@@ -118,12 +143,10 @@ export const withAndroidAlternateIcons: ConfigPlugin<NormalizedAppIcon[]> = (con
             category: [{ $: { 'android:name': 'android.intent.category.LAUNCHER' } }],
           },
         ],
-      };
-      // android:roundIcon isn't in the type declaration but is a valid manifest attribute.
-      (alias.$ as Record<string, string | undefined>)['android:roundIcon'] =
-        `@mipmap/${roundLauncherName(icon.name)}`;
-      application['activity-alias'].push(alias);
+      });
     }
+
+    application['activity-alias'] = aliases;
 
     return config;
   });
