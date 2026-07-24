@@ -31,13 +31,16 @@
     "alternate-icon",
     "expo-plugin"
   ],
-  "repository": "",
-  "bugs": {
-    "url": "/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dev-abdulw/expo-runtime-app-icon.git"
   },
-  "author": "abdulwahab <abdulwahab.asif@dubizzlelabs.com> (abdulwahab-077)",
+  "bugs": {
+    "url": "https://github.com/dev-abdulw/expo-runtime-app-icon/issues"
+  },
+  "author": "dev-abdulw",
   "license": "MIT",
-  "homepage": "#readme",
+  "homepage": "https://github.com/dev-abdulw/expo-runtime-app-icon#readme",
   "dependencies": {
     "@expo/config-plugins": ">=8.0.0",
     "@expo/image-utils": ">=0.5.0"
