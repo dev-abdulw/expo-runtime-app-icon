@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "expo-runtime-app-icon-example",
+    "slug": "expo-runtime-app-icon-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.dubizzle.expodynamicappicon.example"
+    },
+    "android": {
+      "package": "dev.dubizzle.expodynamicappicon.example",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-runtime-app-icon",
+        {
+          "icons": {
+            "red": {
+              "image": "./assets/icon-red.png",
+              "backgroundColor": "#DC2626"
+            },
+            "gold": {
+              "image": "./assets/icon-gold.png",
+              "backgroundColor": "#D97706"
+            }
+          }
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "name": "expo-runtime-app-icon",
+  "version": "0.1.0",
+  "description": "Change your Expo app's icon at runtime, on iOS and Android, with an Expo config plugin and native module. Compatible with Expo SDK 55, 56, and 57.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "plugin/build",
+    "app.plugin.js",
+    "ios",
+    "android",
+    "expo-module.config.json",
+    "*.podspec"
+  ],
+  "scripts": {
+    "build": "node internal/module_scripts/build.js && node internal/module_scripts/build.js plugin",
+    "clean": "node internal/module_scripts/clean.js",
+    "lint": "eslint src/ plugin/src/",
+    "test": "node internal/module_scripts/test.js",
+    "prepare": "node internal/module_scripts/prepare.js && node internal/module_scripts/build.js plugin",
+    "open:ios": "node internal/module_scripts/open-ios.js",
+    "open:android": "node internal/module_scripts/open-android.js"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-runtime-app-icon",
+    "ExpoDynamicAppIcon",
+    "app-icon",
+    "alternate-icon",
+    "expo-plugin"
+  ],
+  "repository": "",
+  "bugs": {
+    "url": "/issues"
+  },
+  "author": "abdulwahab <abdulwahab.asif@dubizzlelabs.com> (abdulwahab-077)",
+  "license": "MIT",
+  "homepage": "#readme",
+  "dependencies": {
+    "@expo/config-plugins": ">=8.0.0",
+    "@expo/image-utils": ">=0.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@types/jest": "^29.2.1",
+    "@types/react": "~19.1.1",
+    "babel-preset-expo": "~55.0.8",
+    "eslint": "~9.39.4",
+    "eslint-config-universe": "^15.0.3",
+    "expo": "^57.0.7",
+    "jest": "^29.7.0",
+    "jest-expo": "~55.0.9",
+    "prettier": "^3.0.0",
+    "react-native": "0.82.1",
+    "typescript": "^5.9.2"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "roots": [
+      "<rootDir>/src"
+    ]
+  },
+  "peerDependencies": {
+    "expo": ">=55.0.0",
+    "react": "*",
+    "react-native": "*"
+  }
+}
