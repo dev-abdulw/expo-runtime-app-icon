@@ -13,10 +13,8 @@ import { NormalizedAppIcon } from './types';
 const ANDROID_RES_PATH = 'android/app/src/main/res/';
 const LEGACY_ICON_SIZE = 48;
 
-// Declared locally (rather than imported from @expo/config-plugins) because
-// `activity-alias` isn't present on the `ManifestApplication` type in every
-// @expo/config-plugins version this plugin supports (SDK 53+). The manifest
-// XML parser (xml2js) accepts arbitrary keys at runtime regardless.
+// activity-alias isn't in @expo/config-plugins' ManifestApplication type on
+// older SDKs (53/54), so it's declared here instead of imported.
 interface ManifestActivityAlias {
   $: {
     'android:name': string;
@@ -89,8 +87,7 @@ async function generateIconMipmapsAsync(projectRoot: string, icon: NormalizedApp
       { src: icon.image, size: legacySize, backgroundColor: icon.backgroundColor },
       legacyDest
     );
-    // Reuse the same square image for the round variant; visually acceptable for
-    // alternate icons and avoids requiring a separate round asset from the user.
+    // Reuse the square icon for the round variant rather than requiring a second asset.
     const roundDest = path.join(resPath, folderName, `${roundLauncherName(icon.name)}.png`);
     await fs.promises.copyFile(legacyDest, roundDest);
   }
@@ -120,8 +117,8 @@ export const withAndroidAlternateIcons: ConfigPlugin<NormalizedAppIcon[]> = (con
     const mainActivity = AndroidConfig.Manifest.getMainActivityOrThrow(manifest);
     const mainActivityName: string = mainActivity.$['android:name'];
 
+    // Drop aliases from a previous prebuild run before regenerating, so re-running stays idempotent.
     const existingAliases = application['activity-alias'] ?? [];
-    // Remove any aliases we previously generated so re-runs of prebuild stay idempotent.
     const aliases = existingAliases.filter(
       (alias) => !alias.$?.['android:targetActivity']?.endsWith(mainActivityName)
     );

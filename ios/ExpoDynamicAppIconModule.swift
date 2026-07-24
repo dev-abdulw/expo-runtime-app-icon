@@ -5,12 +5,10 @@ public class ExpoDynamicAppIconModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ExpoDynamicAppIcon")
 
-    // Name of the currently active icon, or null when the default (primary) icon is active.
     Property("currentIconName") {
       UIApplication.shared.alternateIconName
     }
 
-    // Names of every alternate icon declared in Info.plist (CFBundleIcons > CFBundleAlternateIcons).
     Property("availableIconNames") {
       Self.alternateIconNames()
     }

@@ -91,9 +91,8 @@ export const withIosAlternateIcons: ConfigPlugin<NormalizedAppIcon[]> = (config,
     },
   ]);
 
-  // No Xcode project mod needed: Images.xcassets is referenced as a single folder
-  // reference, so any .appiconset placed inside it is picked up automatically by
-  // the asset catalog compiler.
+  // Images.xcassets is a single folder reference in the pbxproj, so no Xcode
+  // project mod is needed — new .appiconset dirs are picked up automatically.
   config = withInfoPlist(config, (config) => {
     const primaryIconName =
       typeof config.modResults.CFBundleIcons === 'object' &&

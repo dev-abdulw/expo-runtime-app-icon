@@ -9,8 +9,8 @@ const pkg = require('../../package.json');
 const withAppIcons: ConfigPlugin<PluginConfig> = (config, props) => {
   if (!props?.icons || Object.keys(props.icons).length === 0) {
     WarningAggregator.addWarningAndroid(
-      'expo-runtime-app-icon',
-      'No icons were configured; skipping. Pass an `icons` map to the plugin, e.g. ["expo-runtime-app-icon", { "icons": { "red": "./assets/icon-red.png" } }]'
+      pkg.name,
+      'No icons configured, skipping. Pass an `icons` map, e.g. ["expo-runtime-app-icon", { icons: { red: "./assets/icon-red.png" } }]'
     );
     return config;
   }

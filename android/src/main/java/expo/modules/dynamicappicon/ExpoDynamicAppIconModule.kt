@@ -38,8 +38,6 @@ class ExpoDynamicAppIconModule : Module() {
     }
   }
 
-  // Every declared alias, including the implicit "Default" one, maps to a fully-qualified
-  // activity-alias component name of the form "<applicationId>.MainActivity<Suffix>".
   private fun aliasComponentName(suffix: String): ComponentName {
     val packageName = context.packageName
     val activityName = if (suffix == DEFAULT_ICON_NAME) {
