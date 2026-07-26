@@ -52,7 +52,7 @@ class ExpoDynamicAppIconModule : Module() {
     val pm = context.packageManager
     val packageInfo = pm.getPackageInfo(
       context.packageName,
-      PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
+      PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS
     )
     val prefix = "${context.packageName}.MainActivity"
     return packageInfo.activities
